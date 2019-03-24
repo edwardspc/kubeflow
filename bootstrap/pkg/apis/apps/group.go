@@ -17,12 +17,12 @@ package apps
 
 import (
 	"fmt"
+	kfdefs "github.com/kubeflow/kubeflow/bootstrap/pkg/apis/apps/kfdef/v1alpha1"
 	log "github.com/sirupsen/logrus"
 	"io"
 	ext "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	crdclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	apiext "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1beta1"
-	kfdefs "github.com/kubeflow/kubeflow/bootstrap/pkg/apis/apps/kfdef/v1alpha1"
 	"k8s.io/client-go/kubernetes"
 	clientset "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -38,19 +38,21 @@ import (
 const (
 	DefaultNamespace = "kubeflow"
 	// TODO: find the latest tag dynamically
-	DefaultVersion    = "master"
-	DefaultGitRepo    = "https://github.com/kubeflow/kubeflow/tarball"
-	KfConfigFile      = "app.yaml"
-	DefaultCacheDir   = ".cache"
-	DefaultConfigDir  = "bootstrap/config"
-	DefaultConfigFile = "kfctl_default.yaml"
-	GcpIapConfig      = "kfctl_iap.yaml"
-	GcpBasicAuth      = "kfctl_basic_auth.yaml"
-	DefaultZone       = "us-east1-d"
-	DefaultGkeApiVer  = "v1beta1"
-	DefaultAppLabel   = "app.kubernetes.io/name"
-	KUBEFLOW_USERNAME = "KUBEFLOW_USERNAME"
-	KUBEFLOW_PASSWORD = "KUBEFLOW_PASSWORD"
+	DefaultVersion     = "master"
+	DefaultGitRepo     = "https://github.com/kubeflow/kubeflow/tarball"
+	KfConfigFile       = "app.yaml"
+	DefaultCacheDir    = ".cache"
+	DefaultConfigDir   = "bootstrap/config"
+	DefaultConfigFile  = "kfctl_default.yaml"
+	GcpIapConfig       = "kfctl_iap.yaml"
+	GcpBasicAuth       = "kfctl_basic_auth.yaml"
+	DefaultZone        = "us-east1-d"
+	DefaultGkeApiVer   = "v1beta1"
+	DefaultAppLabel    = "app.kubernetes.io/name"
+	KUBEFLOW_USERNAME  = "KUBEFLOW_USERNAME"
+	KUBEFLOW_PASSWORD  = "KUBEFLOW_PASSWORD"
+	// TODO: switch to bootstrap/k8sSpec/v1.11.7/api/openapi-spec/swagger.json
+	DefaultSwaggerFile = "releasing/releaser/lib/v1.9.7/swagger.json"
 )
 
 type ResourceEnum string
@@ -75,13 +77,14 @@ const (
 	REPO                  CliOption = "repo"
 	PROJECT               CliOption = "project"
 	APPNAME               CliOption = "appname"
-	APPDIR                CliOption = "appDir"
 	DATA                  CliOption = "Data"
 	ZONE                  CliOption = "zone"
 	USE_BASIC_AUTH        CliOption = "use_basic_auth"
+	USE_ISTIO             CliOption = "use_istio"
 	OAUTH_ID              CliOption = "oauth_id"
 	OAUTH_SECRET          CliOption = "oauth_secret"
-	CONFIG                CliOption = "config"
+	DELETE_STORAGE        CliOption = "delete_storage"
+	DISABLE_USAGE_REPORT  CliOption = "disable_usage_report"
 )
 
 //
